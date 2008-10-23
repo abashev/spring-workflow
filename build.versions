@@ -1,0 +1,4 @@
+org.antlr.runtime=3.0.1
+org.springframework.spring=2.5.4.A
+org.springframework.security=2.0.0.A
+org.junit=4.4.0
