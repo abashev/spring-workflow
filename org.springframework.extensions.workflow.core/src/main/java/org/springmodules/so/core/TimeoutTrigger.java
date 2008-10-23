@@ -1,0 +1,13 @@
+package org.springmodules.so.core;
+
+import java.util.Date;
+
+/**
+ * @author janm
+ */
+public interface TimeoutTrigger {
+
+    boolean trigger(Date enteredDate,
+                    String expression);
+
+}

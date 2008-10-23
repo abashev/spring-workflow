@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="package-top-level">
+
+	<target name="package" description="Creates the release package for this project">
+		<delete dir="${package.output.dir}" quiet="true"/>
+		<mkdir dir="${package.output.dir}"/>
+		<delete file="${package.output.file}" quiet="true"/>
+		<mkdir dir="${artifacts.dir}"/>
+
+		<all-bundles target="package">
+			<property name="package.output.dir" value="${package.output.dir}"/>
+		</all-bundles>
+
+		<copy todir="${package.output.dir}/projects">
+			<fileset dir="${basedir}/..">
+				<exclude name="integration-repo/**" />
+				<exclude name="ivy-cache/**" />
+				<exclude name="**/target/**"/>
+			</fileset>
+		</copy>
+
+		<replaceregexp match="build.stamp.*\n" replace="" flags="g"
+				file="${package.output.dir}/projects/build.properties"/>
+
+		<replaceregexp match="release.type=.*" replace="release.type=integration" flags="g"
+				file="${package.output.dir}/projects/build.properties"/>
+
+		<copy todir="${package.output.dir}">
+			<fileset dir="${basedir}/resources" />
+		</copy>
+
+		<zip destfile="${package.output.file}">
+			<zipfileset dir="${package.dir}"/>
+		</zip>
+	</target>
+
+</project>

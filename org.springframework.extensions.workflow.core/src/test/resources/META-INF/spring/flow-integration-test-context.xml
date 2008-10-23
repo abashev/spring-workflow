@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="lastTransition" class="org.springframework.extensions.workflow.TransitionHolder"/>
+    <bean class="org.springframework.extensions.workflow.flow.MainFlow"/>
+    <bean class="org.springframework.extensions.workflow.flow.EndState" p:lastTransition-ref="lastTransition"/>
+    <bean class="org.springframework.extensions.workflow.flow.StartState" p:lastTransition-ref="lastTransition"/>
+
+    <bean id="flowInstanceDescriptorPersister" class="org.springframework.extensions.workflow.flow.LongFlowInstanceDescriptorPersister"/>
+    <bean id="flowSession" class="org.springframework.extensions.workflow.instance.session.LocalFlowSession">
+        <property name="flowInstanceDescriptorPersisters">
+            <map>
+                <entry key="org.springframework.extensions.workflow.flow.LongFlowInstanceDescriptor" value-ref="flowInstanceDescriptorPersister"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.extensions.workflow.support.FlowDefinitionPostProcessor"/>
+</beans>
