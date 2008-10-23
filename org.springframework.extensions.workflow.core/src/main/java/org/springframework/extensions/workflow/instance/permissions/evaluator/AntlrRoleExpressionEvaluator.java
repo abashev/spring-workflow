@@ -5,9 +5,6 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
-import org.springframework.extensions.workflow.instance.permissions.evaluator.RoleExpressionEvaluator;
-import org.springframework.extensions.workflow.instance.permissions.evaluator.RoleExpressionLexer;
-import org.springframework.extensions.workflow.instance.permissions.evaluator.RoleExpressionParser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +14,7 @@ import java.util.regex.Pattern;
  */
 public class AntlrRoleExpressionEvaluator implements RoleExpressionEvaluator {
     private static final Pattern ROLE_PATTERN = Pattern.compile("^\\[?([^]]*)\\]?$");
+    private static final long serialVersionUID = -1199626460973229852L;
 
     private boolean evaluateTree(CommonTree tree, String[] grantedRoles) {
         switch (tree.getType()) {
