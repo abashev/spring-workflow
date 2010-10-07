@@ -38,12 +38,31 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
     		<artifactId>spring-security-core</artifactId>
-    		<version>${spring.version}</version>
+    		<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr</artifactId>
 			<version>3.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -72,6 +91,7 @@
 	</build>
 
 	<properties>
-		<spring.version>3.0.3.RELEASE</spring.version>
+		<spring.version>3.0.4.RELEASE</spring.version>
+		<spring.security.version>3.0.3.RELEASE</spring.security.version>
 	</properties>
 </project>

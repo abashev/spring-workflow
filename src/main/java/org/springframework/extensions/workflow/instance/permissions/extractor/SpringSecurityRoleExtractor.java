@@ -1,9 +1,11 @@
 package org.springframework.extensions.workflow.instance.permissions.extractor;
 
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
+import java.util.Collection;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author janm
@@ -17,12 +19,17 @@ public class SpringSecurityRoleExtractor implements RoleExtractor {
         if (securityContext == null) return NO_ROLES;
         Authentication authentication = securityContext.getAuthentication();
         if (authentication == null) return NO_ROLES;
-        GrantedAuthority[] authorities = authentication.getAuthorities();
-        if (authorities == null) return NO_ROLES;
+        Collection<GrantedAuthority> authorities = authentication.getAuthorities();
+        
+        if ((authorities == null) || (authorities.isEmpty())) {
+            return NO_ROLES;
+        }
 
-        String[] roles = new String[authorities.length];
-        for (int i = 0; i < authorities.length; i++) {
-            roles[i] = authorities[i].getAuthority();
+        String[] roles = new String[authorities.size()];
+        int i = 0;
+        
+        for (GrantedAuthority authority : authorities) {
+            roles[i++] = authority.getAuthority();
         }
 
         return roles;
