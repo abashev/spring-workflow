@@ -40,7 +40,6 @@ public class FlowInstanceDelegate implements FlowInstance {
         Assert.notNull(flowDefinition, "The 'flowDefinition' argument must not be null.");
         Assert.notNull(flowInstanceDescriptor, "The 'flowInstanceDescriptor' argument must not be null.");
         Assert.notNull(flowInstanceDescriptorPersister, "The 'flowInstanceDescriptorPersister' argument must not be null.");
-        Assert.notNull(roleExtractor, "The 'roleExtractor' argument must not be null.");
 
         this.flowInstanceDescriptor = flowInstanceDescriptor;
         this.flowInstanceDescriptorPersister = flowInstanceDescriptorPersister;

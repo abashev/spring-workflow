@@ -1,5 +1,10 @@
 package org.springframework.extensions.workflow.instance.session;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -7,16 +12,21 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.util.ClassUtils;
-import org.springframework.extensions.workflow.*;
-import org.springframework.extensions.workflow.instance.*;
+import org.springframework.extensions.workflow.FlowDefinition;
+import org.springframework.extensions.workflow.NoSuchFlowDefinitionException;
+import org.springframework.extensions.workflow.SimpleTimeoutTrigger;
+import org.springframework.extensions.workflow.StateDefinition;
+import org.springframework.extensions.workflow.TimeoutTrigger;
+import org.springframework.extensions.workflow.TransitionDefinition;
+import org.springframework.extensions.workflow.instance.DefaultFlowInstanceDescriptorPersister;
+import org.springframework.extensions.workflow.instance.FlowInstance;
+import org.springframework.extensions.workflow.instance.FlowInstanceDescriptor;
+import org.springframework.extensions.workflow.instance.FlowInstanceDescriptorCreator;
+import org.springframework.extensions.workflow.instance.FlowInstanceDescriptorInitializer;
+import org.springframework.extensions.workflow.instance.FlowInstanceDescriptorPersister;
 import org.springframework.extensions.workflow.instance.permissions.extractor.RoleExtractor;
 import org.springframework.extensions.workflow.instance.permissions.extractor.SpringSecurityRoleExtractor;
-
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Date;
-import java.io.Serializable;
+import org.springframework.util.ClassUtils;
 
 /**
  * @author janm
@@ -30,7 +40,10 @@ public class LocalFlowSession implements InitializingBean, BeanFactoryAware, Flo
     private static final long serialVersionUID = 2858255163637178309L;
 
     public LocalFlowSession() {
-        if (ClassUtils.isPresent("org.springframework.security.context.SecurityContextHolder")) {
+        if (ClassUtils.isPresent(
+                "org.springframework.security.core.context.SecurityContextHolder", 
+                this.getClass().getClassLoader()
+        )) {
             this.roleExtractor = new SpringSecurityRoleExtractor();
         }
         if (logger.isDebugEnabled() && this.roleExtractor != null) {
