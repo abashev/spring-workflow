@@ -48,5 +48,16 @@ public class DefaultFlowInstanceDescriptor implements FlowInstanceDescriptor, Se
     public void setDateEntered(Date dateEntered) {
         this.dateEntered = dateEntered;
     }
-   
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "DefaultFlowInstanceDescriptor [" +
+        		"flowId=" + flowDefinitionId + ", " +
+        		"stateId=" + stateDefinitionId + ", " +
+        		"dateEntered=" + dateEntered + ", " +
+        		"withTimeouts=" + withTimeouts + "]";
+    }
 }
