@@ -70,13 +70,24 @@ class TransitionMethodInvoker {
                 arguments.add(FlowInstanceDescriptorHolder.getFlowInstanceDescriptor());
             }
         }
-        Object ret = this.method.invoke(this.target, arguments.toArray());
-        if (this.method.getAnnotation(ReturnsState.class) != null) {
-            if (ret != null) {
-                actionContext.setTargetStateId(ret.toString());
+
+        boolean accessable = this.method.isAccessible();
+        Object ret;
+
+        try {
+            this.method.setAccessible(true);
+
+            ret = this.method.invoke(this.target, arguments.toArray());
+
+            if (this.method.getAnnotation(ReturnsState.class) != null) {
+                if (ret != null) {
+                    actionContext.setTargetStateId(ret.toString());
+                }
             }
+        } finally {
+            this.method.setAccessible(accessable);
         }
-        
+
         return ret;
     }
 
