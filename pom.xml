@@ -44,8 +44,18 @@
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr</artifactId>
 			<version>3.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>stringtemplate</artifactId>
+                    <groupId>org.antlr</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>antlr</groupId>
+                    <artifactId>antlr</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -81,7 +91,7 @@
 		<connection>${scm.connection}</connection>
 		<developerConnection>${scm.connection}</developerConnection>
 	</scm>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -115,9 +125,9 @@
 	</build>
 
 	<properties>
-		<spring.version>3.0.4.RELEASE</spring.version>
-		<spring.security.version>3.0.3.RELEASE</spring.security.version>
-		
+		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.security.version>3.0.5.RELEASE</spring.security.version>
+
 		<scm.connection>scm:hg:git+ssh://git@github.com:abashev/spring-workflow.git</scm.connection>
 	</properties>
 </project>
