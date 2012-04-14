@@ -2,6 +2,7 @@ package org.springframework.extensions.workflow.instance.session;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class LocalFlowSession implements InitializingBean, BeanFactoryAware, Flo
 
     public LocalFlowSession() {
         if (ClassUtils.isPresent(
-                "org.springframework.security.core.context.SecurityContextHolder", 
+                "org.springframework.security.core.context.SecurityContextHolder",
                 this.getClass().getClassLoader()
         )) {
             this.roleExtractor = new SpringSecurityRoleExtractor();
@@ -65,8 +66,12 @@ public class LocalFlowSession implements InitializingBean, BeanFactoryAware, Flo
     }
 
     public final void afterPropertiesSet() throws Exception {
-        if (this.flowInstanceDescriptorPersisters == null) {
-            this.flowInstanceDescriptorPersisters.put(DEFAULT_PERSISTER, new DefaultFlowInstanceDescriptorPersister());
+        if (flowInstanceDescriptorPersisters == null) {
+            flowInstanceDescriptorPersisters = new HashMap<String, FlowInstanceDescriptorPersister>();
+        }
+
+        if (flowInstanceDescriptorPersisters.isEmpty()) {
+            flowInstanceDescriptorPersisters.put(DEFAULT_PERSISTER, new DefaultFlowInstanceDescriptorPersister());
         }
     }
 
