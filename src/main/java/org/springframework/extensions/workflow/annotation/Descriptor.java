@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Argument of a transition method (e.g. method in a state with the
  * {@link org.springframework.extensions.workflow.annotation.Transition} annotaiton)
  * with this annotation will be set to the flow's current payload
- * ({@link org.springframework.extensions.workflow.annotation.FlowInstanceDescriptorArgument} subclass).<br/>
+ * ({@link org.springframework.extensions.workflow.annotation.Descriptor} subclass).<br/>
  * Typical usage is <code><pre>
  * &#64;Flow(flowInstanceDescriptorClass = X.class)
  * public class Flow {
@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
  *
  * &#64;State
  * public class State {
- *     public void foo(&#64;FlowInstanceDescriptorArgument X x) {
+ *     public void foo(&#64;Descriptor X x) {
  *         // the value of x is injected automatically upon calling flowInstance.performTransition("foo");
  *     }
  * }
@@ -26,5 +26,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface FlowInstanceDescriptorArgument {
+public @interface Descriptor {
 }
