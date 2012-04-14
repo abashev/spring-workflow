@@ -71,21 +71,14 @@ class TransitionMethodInvoker {
             }
         }
 
-        boolean accessable = this.method.isAccessible();
-        Object ret;
+        method.setAccessible(true); // Set accessible for invokation
 
-        try {
-            this.method.setAccessible(true);
+        final Object ret = ReflectionUtils.invokeMethod(method, target, arguments.toArray());
 
-            ret = this.method.invoke(this.target, arguments.toArray());
-
-            if (this.method.getAnnotation(ReturnsState.class) != null) {
-                if (ret != null) {
-                    actionContext.setTargetStateId(ret.toString());
-                }
+        if (this.method.getAnnotation(ReturnsState.class) != null) {
+            if (ret != null) {
+                actionContext.setTargetStateId(ret.toString());
             }
-        } finally {
-            this.method.setAccessible(accessable);
         }
 
         return ret;
