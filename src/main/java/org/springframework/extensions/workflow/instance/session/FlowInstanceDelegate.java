@@ -103,7 +103,11 @@ public class FlowInstanceDelegate implements FlowInstance {
             }
             this.flowInstanceDescriptorPersister.persist(this.flowInstanceDescriptor);
         } catch (Exception e) {
-            throw new TransitionFailedException("Could not perform transition '" + id + "' on " + getStateDefinitionId(), id, e);
+            String msg = "Could not perform transition '" + id + "' on " + getStateDefinitionId();
+
+            logger.warn(msg, e);
+
+            throw new TransitionFailedException(msg, id, e);
         }
     }
 
@@ -183,17 +187,19 @@ public class FlowInstanceDelegate implements FlowInstance {
         sb.append('}');
         return sb.toString();
     }
+
     public FlowInstanceDescriptor getFlowInstanceDescriptor() {
         return this.flowInstanceDescriptor;
     }
 
     private static class AllIncludedFilter implements TransitionDefinitionFilter<FlowInstanceDescriptor>, Serializable {
+        private static final long serialVersionUID = -5199122498416254660L;
 
         public boolean filter(TransitionDefinition transitionDefinition, FlowInstanceDescriptor descriptor) {
             return true;
         }
     }
-    
-    
+
+
 
 }
